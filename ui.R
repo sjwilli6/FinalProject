@@ -13,7 +13,7 @@ library(shiny)
 fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("MLB 2019 Season Statistics"),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
@@ -27,7 +27,11 @@ fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
-            plotOutput("distPlot")
+          
+          tabsetPanel(type = "tabs",
+                      tabPanel("About", textOutput("Page1")),
+                      tabPanel("EDA", plotOutput("EDA"))
+          )
         )
     )
 )

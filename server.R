@@ -12,7 +12,7 @@ library(shiny)
 # Define server logic required to draw a histogram
 function(input, output, session) {
 
-    output$distPlot <- renderPlot({
+    output$EDA <- renderPlot({
 
         # generate bins based on input$bins from ui.R
         x    <- faithful[, 2]
@@ -23,6 +23,12 @@ function(input, output, session) {
              xlab = 'Waiting time to next eruption (in mins)',
              main = 'Histogram of waiting times')
 
+    })
+    
+    output$Page1 <- renderText({
+      
+      paste("The 2019 MLB data can be found from https://baseballguru.com/bbdata1.html. ")
+      
     })
 
 }
