@@ -58,13 +58,13 @@ function(input, output, session) {
   
   output$downloadData = downloadHandler(
     filename = function(){paste(map_var_name(),"data.csv")},
-    content = function(file){write.csv(mlb_data[,c("AB", "HR", map_var_name())],
+    content = function(file){write.csv(mlb_data1[,c("AB", "HR", map_var_name())],
                                        file, row.names = FALSE)}
   )
   
   output$downloadAllData = downloadHandler(
     filename = function(){"all_data.csv"},
-    content = function(file){write.csv(mlb_data, file)}
+    content = function(file){write.csv(mlb_data1, file)}
   )
   
   #create text info

@@ -61,11 +61,31 @@ modInfo_tab = tabItem("model_info",fluidRow(box(modInfo_string1, uiOutput('mod1'
 ####################################################################################################
 
 ### Model Fitting #################################################################
-modelFit_string = HTML("<h2>Model Information</h2>")
+modelFit_string = HTML("<h2>Model Information</h2>
+                       <p>We will be fitting the three models to our data to predict the position varibale. The models will be able to predict which position a player plays according to some of the hitting statistics recorded in the data set.</p>")
 
-train_prop = box(width = 4, sliderInput("proportion", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 50, step = 1),)
 
-modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop))
+
+train_prop = box(width = 3, sliderInput("proportion", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 50, step = 1),)
+
+mod1_selection = box(width = 3,
+                     checkboxGroupInput("mod1_var", "Variables to include in the Multiple Linear Regression Model: ",
+                                        c("G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
+                                          "BB", "SO", "avg")))
+
+mod2_selection = box(width = 3,
+                     checkboxGroupInput("mod2_var", "Variables to include in the Classification Tree Model: ",
+                                        c("G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
+                                          "BB", "SO", "avg")))
+
+mod3_selection = box(width = 3,
+                     checkboxGroupInput("mod3_var", "Variables to include in the Random Forest Model: ",
+                                        c("G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
+                                          "BB", "SO", "avg")))
+
+run_selection = actionButton("ready", "Run the Models")
+
+modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod3_selection, mod3_selection, run_selection))
 ####################################################################################################
 
 ### Data for Last Page ##############################################################
