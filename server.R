@@ -112,7 +112,13 @@ function(input, output, session) {
   
 ## Model Fitting ####################################################
 
-  
+  set.seed(5432)
+  # split data into test and training sets
+  cut <- reactive({sample(1:nrow(mlb_data), input$proportion * nrow(mlb_data))
+
+  mlb_train <- heart_data[cut,]
+  mlb_test <- heart_data[-cut,]
+  })
 
 ######################################################
   

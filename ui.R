@@ -41,9 +41,6 @@ expl_plot = box(title = uiOutput("expl_plot_title"), width = 8,
 exploration_tab = tabItem("exploration", fluidRow(expl_controls, expl_plot))
 ###########################################################
 
-### UI layout for clustering tab ###################################################################
-
-# Note: checkboxGroupInput outputs a character vector of the selected choices.
 modInfo_string1 = HTML("<h2>Model Information</h2>
   <br>
   <h3>Multiple Linear Regression</h3>
@@ -66,7 +63,9 @@ modInfo_tab = tabItem("model_info",fluidRow(box(modInfo_string1, uiOutput('mod1'
 ### Model Fitting #################################################################
 modelFit_string = HTML("<h2>Model Information</h2>")
 
-modFit_tab = tabItem("model_fit", fluidRow(box(modelFit_string, width = 8)))
+train_prop = box(width = 4, sliderInput("proportion", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 50, step = 1),)
+
+modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop))
 ####################################################################################################
 
 ### Data for Last Page ##############################################################
