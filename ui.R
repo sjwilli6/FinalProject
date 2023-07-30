@@ -70,18 +70,18 @@ train_prop = box(width = 3, sliderInput("proportion", "Select Proportion for Tra
 
 mod1_selection = box(width = 3,
                      checkboxGroupInput("mod1_var", "Variables to include in the Multiple Linear Regression Model: ",
-                                        c("G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
-                                          "BB", "SO", "avg")))
+                                        c("G"="G", "AB"="AB", "R"="R", "H"="H", "db"="db", "tr"="tr", "HR"="HR", "RBI"="RBI", "SB"="SB",
+                                          "BB"="BB", "SO"="SO", "avg"="avg")))
 
 mod2_selection = box(width = 3,
                      checkboxGroupInput("mod2_var", "Variables to include in the Classification Tree Model: ",
-                                        c("G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
-                                          "BB", "SO", "avg")))
+                                        c("G"="G", "AB"="AB", "R"="R", "H"="H", "db"="db", "tr"="tr", "HR"="HR", "RBI"="RBI", "SB"="SB",
+                                          "BB"="BB", "SO"="SO", "avg"="avg")))
 
 mod3_selection = box(width = 3,
                      checkboxGroupInput("mod3_var", "Variables to include in the Random Forest Model: ",
-                                        c("G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
-                                          "BB", "SO", "avg")))
+                                        c("G"="G", "AB"="AB", "R"="R", "H"="H", "db"="db", "tr"="tr", "HR"="HR", "RBI"="RBI", "SB"="SB",
+                                          "BB"="BB", "SO"="SO", "avg"="avg")))
 
 run_selection = actionButton("ready", "Run the Models")
 

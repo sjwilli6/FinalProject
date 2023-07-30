@@ -124,22 +124,27 @@ function(input, output, session) {
   
   fit_mod1 <- eventReactive(input$ready, {
     if(length(input$mod1_var) > 0) {
-      df = mlb_train()[,c(input$mod1_var, "pos1")]
-    return(lm(pos1 ~ ., data = df, preProcess = c("center", "scale"), trControl = trainControl(method = "cv", number = 5)))}})
+      df = mlb_train[ ,c(input$mod1_var)]
+    return(lm(pos1 ~ ., data = df, preProcess = c("center", "scale"), trControl = trainControl(method = "cv", number = 5)))}
+    else if (length(input$mod1_var) < 0) {
+      (print("No Results"))}})
 
   fit_mod2 <- eventReactive(input$ready, {
     if(length(input$mod2_var) > 0) {
-      d = mlb_train()[,c(input$mod2_var, "pos1")]
-      return(tree(pos1 ~ ., data = d))}})
+      d = mlb_train[ ,c(input$mod2_var)]
+      return(tree(pos1 ~ ., data = d))}
+  else if (length(input$mod2_var) < 0) {
+    (print("No Results"))}})
   
   fit_mod3 <- eventReactive(input$ready, {
     if(length(input$mod3_var) > 0) {
-      x = mlb_train()[,c(input$mod3_var, "pos1")]
+      x = mlb_train[ ,c(input$mod3_var)]
       x = x[complete.cases(x),]
-      y = x$pos1
-      x = x %>% select(-pos1)
+      y = mlb_train$pos1
       return(randomForest(x = x, y = as.factor(y), mtry = ncol(mlb_train) - 1,
-                           ntree = 200, importance = TRUE))}})
+                           ntree = 200, importance = TRUE))}
+    else if (length(input$mod3_var) < 0) {
+      (print("No Results"))}})
   
   output$fitted_mod1 = renderUI({fit_mod1()})
   output$fitted_mod2 = renderUI({fit_mod2()})
