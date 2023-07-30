@@ -62,7 +62,7 @@ modInfo_tab = tabItem("model_info",fluidRow(box(modInfo_string1, uiOutput('mod1'
 
 ### Model Fitting #################################################################
 modelFit_string = HTML("<h2>Model Information</h2>
-                       <p>We will be fitting the three models to our data to predict the position varibale. The models will be able to predict which position a player plays according to some of the hitting statistics recorded in the data set.</p>")
+                       <p>We will be fitting the three models to our data to predict the position variable. The models will be able to predict which position a player plays according to some of the hitting statistics recorded in the data set.</p>")
 
 
 
@@ -85,7 +85,11 @@ mod3_selection = box(width = 3,
 
 run_selection = actionButton("ready", "Run the Models")
 
-modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod3_selection, mod3_selection, run_selection))
+model_output = box(uiOutput("fitted_mod1"),
+                   uiOutput("fitted_mod2"),
+                   uiOutput("fitted_mod3"))
+
+modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod3_selection, mod3_selection, run_selection, model_output))
 ####################################################################################################
 
 ### Data for Last Page ##############################################################

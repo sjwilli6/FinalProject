@@ -8,6 +8,9 @@
 #
 
 library(shiny)
+library(randomForest)
+library(tree)
+library(caret)
 
 # Define server logic required to draw a histogram
 function(input, output, session) {
@@ -114,12 +117,34 @@ function(input, output, session) {
 
   set.seed(5432)
   # split data into test and training sets
-  cut <- reactive({sample(1:nrow(mlb_data), input$proportion * nrow(mlb_data))
+  cut <- reactive({sample(1:nrow(mlb_data), input$proportion * nrow(mlb_data))})
 
-  mlb_train <- heart_data[cut,]
-  mlb_test <- heart_data[-cut,]
-  })
+  mlb_train <- reactive({mlb_data[cut,]})
+  mlb_test <- reactive({mlb_data[-cut,]})
+  
+  fit_mod1 <- eventReactive(input$ready, {
+    if(length(input$mod1_var) > 0) {
+      df = mlb_train()[,c(input$mod1_var, "pos1")]
+    return(lm(pos1 ~ ., data = df, preProcess = c("center", "scale"), trControl = trainControl(method = "cv", number = 5)))}})
 
+  fit_mod2 <- eventReactive(input$ready, {
+    if(length(input$mod2_var) > 0) {
+      d = mlb_train()[,c(input$mod2_var, "pos1")]
+      return(tree(pos1 ~ ., data = d))}})
+  
+  fit_mod3 <- eventReactive(input$ready, {
+    if(length(input$mod3_var) > 0) {
+      x = mlb_train()[,c(input$mod3_var, "pos1")]
+      x = x[complete.cases(x),]
+      y = x$pos1
+      x = x %>% select(-pos1)
+      return(randomForest(x = x, y = as.factor(y), mtry = ncol(mlb_train) - 1,
+                           ntree = 200, importance = TRUE))}})
+  
+  output$fitted_mod1 = renderUI({fit_mod1()})
+  output$fitted_mod2 = renderUI({fit_mod2()})
+  output$fitted_mod3 = renderUI({fit_mod3()})
+  
 ######################################################
   
 ## Data ####################################################
