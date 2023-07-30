@@ -86,7 +86,7 @@ mod3_selection = box(width = 3,
 run_selection = actionButton("ready", "Run the Models")
 
 model_output = box(uiOutput("fitted_mod1"),
-                   uiOutput("fitted_mod2"),
+                   plotOutput("fitted_mod2"),
                    uiOutput("fitted_mod3"))
 
 modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod3_selection, mod3_selection, run_selection, model_output))

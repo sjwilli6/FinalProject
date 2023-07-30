@@ -125,14 +125,18 @@ function(input, output, session) {
   fit_mod1 <- eventReactive(input$ready, {
     if(length(input$mod1_var) > 0) {
       df = mlb_train[ ,c(input$mod1_var)]
-    return(lm(pos1 ~ ., data = df, preProcess = c("center", "scale"), trControl = trainControl(method = "cv", number = 5)))}
+      df = df[complete.cases(df)]
+      lin_model <- lm(pos1 ~ ., data = df, preProcess = c("center", "scale"), trControl = trainControl(method = "cv", number = 5))
+      return(summary(lin_model))}
     else if (length(input$mod1_var) < 0) {
       (print("No Results"))}})
 
   fit_mod2 <- eventReactive(input$ready, {
     if(length(input$mod2_var) > 0) {
       d = mlb_train[ ,c(input$mod2_var)]
-      return(tree(pos1 ~ ., data = d))}
+      d = d[complete.cases(d),]
+      tree_model <- tree(pos1 ~ ., data = d)
+      return(plot(tree_model))}
   else if (length(input$mod2_var) < 0) {
     (print("No Results"))}})
   
@@ -141,8 +145,9 @@ function(input, output, session) {
       x = mlb_train[ ,c(input$mod3_var)]
       x = x[complete.cases(x),]
       y = mlb_train$pos1
-      return(randomForest(x = x, y = as.factor(y), mtry = ncol(mlb_train) - 1,
-                           ntree = 200, importance = TRUE))}
+      rf <- randomForest(x = x, y = as.factor(y), mtry = ncol(mlb_train) - 1,
+                           ntree = 200, importance = TRUE)
+      return(rf$results, rf$bestTune)}
     else if (length(input$mod3_var) < 0) {
       (print("No Results"))}})
   
