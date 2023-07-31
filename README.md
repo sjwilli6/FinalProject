@@ -31,5 +31,5 @@ install.packages(prediction)
 install.packages(plotly)
 ```
 
-
-• The shiny::runGitHub() code that we can copy and paste into RStudio to run your app.
+# Code to run app
+shiny::runGitHub('sjwilli6/FinalProject')
