@@ -24,15 +24,10 @@ library(plotly)
 ``` r
 # Install Packages
 install.packages(shiny)
-
 install.packages(randomForest)
-
 install.packages(tree)
-
 install.packages(caret)
-
 install.packages(prediction)
-
 install.packages(plotly)
 ```
 
