@@ -10,11 +10,31 @@ This app uses hitting statistics from the 2019 MLB season. Users can select diff
 # Packages
 
 library(shiny)
+
 library(randomForest)
+
 library(tree)
+
 library(caret)
+
 library(prediction)
+
 library(plotly)
+
+``` r
+# Install Packages
+install.packages(shiny)
+
+install.packages(randomForest)
+
+install.packages(tree)
+
+install.packages(caret)
+
+install.packages(prediction)
+
+install.packages(plotly)
+```
 
 
 
