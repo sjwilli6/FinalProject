@@ -3,7 +3,11 @@
 ## July 31, 2023
 
 library(shinydashboard)
-library(plotly)
+
+mlb_data <- as_tibble(read_csv("/Users/monicabeingolea/Documents/ST558/mlb2019.csv"))
+mlb_data <- mlb_data[ , c(2:3,9,11,13:31,36)]
+colnames(mlb_data) <- c("nameFirst", "nameLast", "teamID", "G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
+                        "CS", "BB", "SO", "IBB", "hbp", "SH", "SF", "GIDP", "avg", "obp", "slg", "pos1")
 
 ### Info for the about section ###############################################################
 about_string = HTML("<h2>2019 MLB Season</h2>
@@ -90,9 +94,10 @@ mod3_selection = box(width = 3,
 run_selection = actionButton("ready", "Run the Models")
 
 # Output the results
-model_output = box(uiOutput("fitted_mod1"),
-                   plotOutput("fitted_mod2"),
-                   uiOutput("fitted_mod3"))
+model_output = box(verbatimTextOutput("fitted_mod1"),
+                   #plotOutput("fitted_mod2"),
+                   #verbatimTextOutput("fitted_mod3")
+                   )
 
 # Compare the models to the testing set
 #compare_output = box(uiOutput("stat_1"),
