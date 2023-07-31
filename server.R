@@ -10,13 +10,13 @@
 library(shiny)
 library(randomForest)
 library(tree)
+library(rpart)
 library(caret)
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
   
   # MLB Data
-  #mlb_data <- read.csv("/Users/monicabeingolea/Documents/ST558/mlb2019.csv")
   mlb_data <- read.csv("mlb2019.csv")
   mlb_data <- mlb_data[ , c(2:3,9,11,13:31,36)]
   mlb_data$pos1 <- as.factor(mlb_data$pos1)
@@ -134,30 +134,57 @@ server <- function(input, output, session) {
   
   output$fitted_mod1 = renderPrint({fit_mod1()})
   
-  #  fit_mod2 <- eventReactive(input$ready, {
-  #    if(length(input$mod2_var) > 0) {
-  #      d = mlb_train[ ,c(input$mod2_var)]
-  #      d = d[complete.cases(d),]
-  #      tree_model <- tree(RBI ~ ., data = d)
-  #      return(plot(tree_model))}
-  #  else if (length(input$mod2_var) < 0) {
-  #    (print("No Results"))}})
-  #  
-  #  fit_mod3 <- eventReactive(input$ready, {
-  #    if(length(input$mod3_var) > 0) {
-  #      x = mlb_train[ ,c(input$mod3_var)]
-  #      x = x[complete.cases(x),]
-  #      y = mlb_train$RBI
-  #      rf <- randomForest(x = x, y = y, mtry = ncol(mlb_train) - 1,
-  #                           ntree = 200, importance = TRUE)
-  #      return(rf$results, rf$bestTune)}
-  #    else if (length(input$mod3_var) < 0) {
-  #      (print("No Results"))}})
+  fit_mod2 <- eventReactive(input$ready, {
+    set.seed(5432)
+    # split data into test and training sets
+    cut <- sample(1:nrow(mlb_data), input$proportion/50 * nrow(mlb_data))
+    mlb_train <- mlb_data[cut,]
+    mlb_test <- mlb_data[-cut,]
+    if(length(input$mod2_var) > 0) {
+      d = mlb_train[ ,c(input$mod2_var,"RBI")]
+      d = d[complete.cases(d),]
+      tree_model <- tree(RBI ~ . - RBI, data = d)
+      return(plot(tree_model))}
+    else if (length(input$mod2_var) < 0) {
+      (return("No Results"))}
+  })
   
-  #  output$fitted_mod1 = renderUI({fit_mod1()})
-  #  output$fitted_mod2 = renderPlot({fit_mod2()})
-  #  output$fitted_mod3 = renderUI({fit_mod3()})
+  output$fitted_mod2 = renderPlot({fit_mod2()})
   
+  fit_mod21 <- eventReactive(input$ready, {
+    set.seed(5432)
+    # split data into test and training sets
+    cut <- sample(1:nrow(mlb_data), input$proportion/50 * nrow(mlb_data))
+    mlb_train <- mlb_data[cut,]
+    mlb_test <- mlb_data[-cut,]
+    if(length(input$mod2_var) > 0) {
+      d = mlb_train[ ,c(input$mod2_var,"RBI")]
+      d = d[complete.cases(d),]
+      tree_model <- tree(RBI ~ . - RBI, data = d)
+      return(summary(tree_model))}
+    else if (length(input$mod2_var) < 0) {
+      (return("No Results"))}
+  })
+  
+  output$fitted_mod21 = renderPrint({fit_mod21()})
+  
+  
+  fit_mod3 <- eventReactive(input$ready, {
+    set.seed(5432)
+    # split data into test and training sets
+    cut <- sample(1:nrow(mlb_data), input$proportion/50 * nrow(mlb_data))
+    mlb_train <- mlb_data[cut,]
+    mlb_test <- mlb_data[-cut,]
+    if(length(input$mod3_var) > 0) {
+      x = mlb_train[ ,c(input$mod3_var,"RBI")]
+      x = x[complete.cases(x),]
+      rf <- randomForest(RBI ~ . - RBI, data = x)
+      return(plot(rf))}
+    else if (length(input$mod3_var) < 0) {
+      (return("No Results"))}
+  })
+  
+  output$fitted_mod3 = renderPlot({fit_mod3()})
   ######################################################
   
   ## Data ####################################################

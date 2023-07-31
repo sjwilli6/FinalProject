@@ -4,11 +4,6 @@
 
 library(shinydashboard)
 
-mlb_data <- as_tibble(read_csv("/Users/monicabeingolea/Documents/ST558/mlb2019.csv"))
-mlb_data <- mlb_data[ , c(2:3,9,11,13:31,36)]
-colnames(mlb_data) <- c("nameFirst", "nameLast", "teamID", "G", "AB", "R", "H", "db", "tr", "HR", "RBI", "SB",
-                        "CS", "BB", "SO", "IBB", "hbp", "SH", "SF", "GIDP", "avg", "obp", "slg", "pos1")
-
 ### Info for the about section ###############################################################
 about_string = HTML("<h2>2019 MLB Season</h2>
             <p>The Washington Nationals won the 2019 MLB World Series behind their star pitcher, Stephen Strasburg. Data was gathered throughout the regular 2019 season and can be found <a href='https://baseballguru.com/bbdata1.html'>here</a>, along with past years. Only the batting statistics will be used for analysis and visualizations.
@@ -94,10 +89,10 @@ mod3_selection = box(width = 3,
 run_selection = actionButton("ready", "Run the Models")
 
 # Output the results
-model_output = box(verbatimTextOutput("fitted_mod1"),
-                   #plotOutput("fitted_mod2"),
-                   #verbatimTextOutput("fitted_mod3")
-                   )
+model_output1 = box(verbatimTextOutput("fitted_mod1"))
+model_output2 = box(plotOutput("fitted_mod2"),
+                    verbatimTextOutput("fitted_mod21"))
+model_output3 = box(plotOutput("fitted_mod3"))
 
 # Compare the models to the testing set
 #compare_output = box(uiOutput("stat_1"),
@@ -105,7 +100,7 @@ model_output = box(verbatimTextOutput("fitted_mod1"),
   #                 uiOutput("stat_3"))
 
 # Output to tabs
-modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod3_selection, mod3_selection, run_selection, model_output))
+modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod2_selection, mod3_selection, run_selection, model_output1, model_output2, model_output3))
 ####################################################################################################
 
 ### Prediction ##############################################################
