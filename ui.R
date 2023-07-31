@@ -19,7 +19,6 @@ mlb_image <- img(src = 'mlbpicture.png', align = 'center', height = '300px', wid
 about_tab = tabItem("about",fluidRow(box(about_string, mlb_image, width = 8)))
 ####################################################################################################
 
-
 ### UI layout for the exploration tab ##############################################################
 # Choices for figure/data
 input_options = c("Homeruns", "RBI's", "Runs", "Batting Avg", "Stolen Bases")
