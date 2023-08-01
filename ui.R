@@ -108,12 +108,12 @@ modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_sel
 ####################################################################################################
 
 ### Prediction ##############################################################
-pred_string = HTML("<h2>Prediction</h2>")
+pred_string = HTML("<h2>Prediction for Multiple Linear Regression</h2>")
 
-model_pred = box(width = 3, radioButtons("mod_pred", "Select the Model: ", choices = c("MLR", "Classification", "Random_Forest")),)
+model_pred = box(width = 3, radioButtons("mod_pred", "Select the Model: ", choices = c("MLR"),))
 
 # Select size for training/testing sets
-train_prop2 = box(width = 3, sliderInput("proportion2", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 50, step = 1),)
+train_prop2 = box(width = 3, sliderInput("proportion2", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 25, step = 1),)
 
 #Create predictions for variables
 prediction_G = box(width = 3, sliderInput("pred_G", "Select Number of Games: ", min = 1, max = 162, value = 50, step = 5),)

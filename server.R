@@ -279,22 +279,6 @@ server <- function(input, output, session) {
         lin_model$coefficients[7]*input$pred_tr + lin_model$coefficients[8]*input$pred_HR + lin_model$coefficients[9]*input$pred_SB +
         lin_model$coefficients[10]*input$pred_BB + lin_model$coefficients[11]*input$pred_SO + lin_model$coefficients[12]*input$pred_avg
       return(pred_lin)}
-    # classification model
-    else if (input$mod_pred == "Classification"){
-        tree_model <- tree(RBI ~ . - RBI, data = df)
-        pred_lin <- tree_model$coefficients[1] + tree_model$coefficients[2]*input$pred_G + tree_model$coefficients[3]*input$pred_AB +
-          tree_model$coefficients[4]*input$pred_R + tree_model$coefficients[5]*input$pred_H + tree_model$coefficients[6]*input$pred_db +
-          tree_model$coefficients[7]*input$pred_tr + tree_model$coefficients[8]*input$pred_HR + tree_model$coefficients[9]*input$pred_SB +
-          tree_model$coefficients[10]*input$pred_BB + tree_model$coefficients[11]*input$pred_SO + tree_model$coefficients[12]*input$pred_avg
-        return(pred_lin)}
-    # rf model
-    else if (input$mod_pred == "Random_Forest"){
-      rf <- randomForest(RBI ~ . - RBI, data = df)
-      pred_lin <- rf$coefficients[1] + rf$coefficients[2]*input$pred_G + rf$coefficients[3]*input$pred_AB +
-        rf$coefficients[4]*input$pred_R + rf$coefficients[5]*input$pred_H + rf$coefficients[6]*input$pred_db +
-        rf$coefficients[7]*input$pred_tr + rf$coefficients[8]*input$pred_HR + rf$coefficients[9]*input$pred_SB +
-        rf$coefficients[10]*input$pred_BB + rf$coefficients[11]*input$pred_SO + rf$coefficients[12]*input$pred_avg
-      return(pred_lin)}
       else {
         (return("No Results"))}
   })
