@@ -115,7 +115,7 @@ model_pred = box(width = 3, radioButtons("mod_pred", "Select the Model: ", choic
 # Select size for training/testing sets
 train_prop2 = box(width = 3, sliderInput("proportion2", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 50, step = 1),)
 
-#Creat predictions for variables
+#Create predictions for variables
 prediction_G = box(width = 3, sliderInput("pred_G", "Select Number of Games: ", min = 1, max = 162, value = 50, step = 5),)
 prediction_AB = box(width = 3, sliderInput("pred_AB", "Select Number of At-Bats: ", min = 1, max = 700, value = 300, step = 50),)
 prediction_R = box(width = 3, sliderInput("pred_R", "Select Number of Runs: ", min = 1, max = 150, value = 75, step = 5),)
@@ -134,7 +134,7 @@ run_selection2 = actionButton("ready2", "Run the Model")
 prediction_numb = box(verbatimTextOutput("p_value"))
 
 # Output to tabs
-pred_tab = tabItem("prediction", fluidRow(pred_string, model_pred, train_prop2, prediction_G, prediction_AB, prediction_R, prediction_HR,
+pred_tab = tabItem("prediction", fluidRow(pred_string, model_pred, train_prop2, prediction_G, prediction_AB, prediction_R, prediction_H,
                                           prediction_db, prediction_tr, prediction_HR, prediction_SB, prediction_BB, prediction_SO, prediction_avg, run_selection2, prediction_numb))
 ####################################################################################################
 

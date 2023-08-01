@@ -230,7 +230,7 @@ server <- function(input, output, session) {
       d1 = d1[complete.cases(d1),]
       tree_model <- tree(RBI ~ . - RBI, data = d)
       tree_model2 <- tree(RBI ~ . - RBI, data = d1)
-      $ return statistics
+      # return statistics
       return(list(tree_model, tree_model2))}
     else if (length(input$mod2_var) < 0) {
       (return("No Results"))}
