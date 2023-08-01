@@ -94,20 +94,48 @@ model_output2 = box(plotOutput("fitted_mod2"),
                     verbatimTextOutput("fitted_mod21"))
 model_output3 = box(plotOutput("fitted_mod3"))
 
-# Compare the models to the testing set
-#compare_output = box(uiOutput("stat_1"),
- #                  uiOutput("stat_2"),
-  #                 uiOutput("stat_3"))
+comp1_header = HTML("<p>Multiple Linear Regression Comparison</p>",)
+compare_model1 = box(verbatimTextOutput("fitted_compare"))
+
+comp2_header = HTML("<p>Classification Tree Comparison</p>",)
+compare_model2 = box(verbatimTextOutput("fitted_compare2"))
+
+comp3_header = HTML("<p>Random Forest Model Comparison</p>",)
+compare_model3 = box(verbatimTextOutput("fitted_compare3"))
 
 # Output to tabs
-modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod2_selection, mod3_selection, run_selection, model_output1, model_output2, model_output3))
+modFit_tab = tabItem("model_fit", fluidRow(modelFit_string, train_prop, mod1_selection, mod2_selection, mod3_selection, run_selection, model_output1, model_output2, model_output3, comp1_header, compare_model1, comp2_header, compare_model2, comp3_header, compare_model3))
 ####################################################################################################
 
 ### Prediction ##############################################################
 pred_string = HTML("<h2>Prediction</h2>")
 
+model_pred = box(width = 3, radioButtons("mod_pred", "Select the Model: ", choices = c("MLR", "Classification", "Random_Forest")),)
+
+# Select size for training/testing sets
+train_prop2 = box(width = 3, sliderInput("proportion2", "Select Proportion for Training Data Set: ", min = 1, max = 100, value = 50, step = 1),)
+
+#Creat predictions for variables
+prediction_G = box(width = 3, sliderInput("pred_G", "Select Number of Games: ", min = 1, max = 162, value = 50, step = 5),)
+prediction_AB = box(width = 3, sliderInput("pred_AB", "Select Number of At-Bats: ", min = 1, max = 700, value = 300, step = 50),)
+prediction_R = box(width = 3, sliderInput("pred_R", "Select Number of Runs: ", min = 1, max = 150, value = 75, step = 5),)
+prediction_H = box(width = 3, sliderInput("pred_H", "Select Number of Hits: ", min = 1, max = 250, value = 100, step = 10),)
+prediction_db = box(width = 3, sliderInput("pred_db", "Select Number of Doubles: ", min = 1, max = 60, value = 30, step = 5),)
+prediction_tr = box(width = 3, sliderInput("pred_tr", "Select Number of Triples: ", min = 1, max = 15, value = 5, step = 1),)
+prediction_HR = box(width = 3, sliderInput("pred_HR", "Select Number of Homeruns: ", min = 1, max = 60, value = 30, step = 5),)
+prediction_SB = box(width = 3, sliderInput("pred_SB", "Select Number of Stolen Bases: ", min = 1, max = 50, value = 25, step = 5),)
+prediction_BB = box(width = 3, sliderInput("pred_BB", "Select Number of Walks: ", min = 1, max = 120, value = 50, step = 10),)
+prediction_SO = box(width = 3, sliderInput("pred_SO", "Select Number of Strikeouts: ", min = 1, max = 200, value = 100, step = 10),)
+prediction_avg = box(width = 3, sliderInput("pred_avg", "Select the Average: ", min = 0.001, max = 1.000, value = 0.500, step = 0.025),)
+
+# Action Button
+run_selection2 = actionButton("ready2", "Run the Model")
+
+prediction_numb = box(verbatimTextOutput("p_value"))
+
 # Output to tabs
-pred_tab = tabItem("prediction", fluidRow(pred_string))
+pred_tab = tabItem("prediction", fluidRow(pred_string, model_pred, train_prop2, prediction_G, prediction_AB, prediction_R, prediction_HR,
+                                          prediction_db, prediction_tr, prediction_HR, prediction_SB, prediction_BB, prediction_SO, prediction_avg, run_selection2, prediction_numb))
 ####################################################################################################
 
 ### Data for Last Page ##############################################################
